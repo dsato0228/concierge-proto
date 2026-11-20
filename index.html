@@ -59,7 +59,7 @@ const T = {
   ko: { title:'AI 컨시어지', talk:'🎤 누르고 말하기', rec:'● 듣는 중… 손을 떼면 전송', ph:'질문을 입력하세요', think:'생각 중…', voice:'음성 준비 중…', note:'버튼을 누르는 동안만 녹음되며 녹음은 저장되지 않습니다. 질문과 답변은 텍스트로 보관됩니다.', mic:'마이크를 사용할 수 없습니다. 텍스트로 입력해 주세요.', err:'죄송합니다. 오류가 발생했습니다. 다시 시도하거나 직원에게 문의해 주세요.', hello:'안녕하세요! 숙박에 관해 무엇이든 물어보세요.' },
   ja: { title:'AIコンシェルジュ', talk:'🎤 押して話す', rec:'● 聞いています…離すと送信', ph:'質問を入力', think:'考えています…', voice:'音声を準備しています…', note:'ボタンを押している間だけ録音し、録音は保存しません。質問と回答は文字で記録します。', mic:'マイクが使えません。文字で入力してください。', err:'エラーが発生しました。もう一度お試しいただくか、スタッフへご連絡ください。', hello:'こんにちは。滞在について何でもお聞きください。' }
 };
-let lang = T[P.get('lang')] ? P.get('lang') : 'en';
+let lang = T[P.get('lang')] ? P.get('lang') : 'ja';
 const $ = id => document.getElementById(id);
 const log = $('log'), talk = $('talk'), status = $('status');
 
@@ -72,6 +72,7 @@ function applyLang() {
 document.querySelectorAll('.langs button').forEach(b => b.onclick = () => { lang = b.dataset.l; applyLang(); });
 applyLang();
 add('ai', T[lang].hello);
+if (!CFG.api) { add('ai', 'このページは専用のリンク（部屋ごとの URL）から開いてください。This page must be opened from the room link.'); talk.disabled = true; $('send').disabled = true; }
 
 function add(who, text, meta, cls) {
   const d = document.createElement('div');
